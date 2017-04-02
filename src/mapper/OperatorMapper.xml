@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.graduate.hotel.operator.service.OperatorMapper">
+
+	<select id="selectByLoginName" parameterType="java.util.Map" resultType="com.graduate.hotel.operator.service.Operator">
+		select * from ht_operator where LoginName=#{loginName}
+		<if test="id != null and id != '' ">
+			and ID=#{id}
+		</if>
+	</select>
+
+	<insert id="add" parameterType="com.graduate.hotel.operator.service.Operator">
+		insert into ht_operator(ID,LoginName,Password,Name,Sex,BirthDay,Phone,Address,ImgUrl,Privilege,Intime)
+		values(#{id},#{loginName},#{password},#{name},#{sex},#{birthDay},#{phone},#{address},#{imgUrl},#{privilege},now())
+	</insert>
+</mapper>

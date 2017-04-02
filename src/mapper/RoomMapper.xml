@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.graduate.hotel.room.service.RoomMapper">
+
+	<select id="query" resultType="com.graduate.hotel.room.service.RoomVo" parameterType="java.util.Map">
+			select r.id id,r.room_number room_number,r.position position,r.type_id type_id,r.state state,r.imgurl imgurl,r.phone phone,
+			rt.bednum bednum,rt.bedtype bedtype,rt.breakfast breakfast,rt.people_num people_num,rt.price price,rt.remark remark,rt.tp_name tp_name
+			from ht_room r join ht_roomtype rt on r.type_id=rt.ID where 1=1 
+		<if test="type_id != null and type_id != '' ">
+			and r.type_id=#{type_id}
+		</if>
+		<if test="room_number != null and room_number != '' ">
+			and r.room_number like concat(concat('%',#{room_number}),'%')
+		</if>
+		order by r.room_number asc
+    	 limit #{rowstart},#{rowend}
+    </select>
+    <select id="count" resultType="int" parameterType="java.util.Map">
+    select COUNT(*) from ht_room r join ht_roomtype rt on r.type_id=rt.ID where 1=1 
+		<if test="type_id != null and type_id != '' ">
+			and r.type_id=#{type_id}
+		</if>
+		<if test="room_number != null and room_number != '' ">
+			and r.room_number like concat(concat('%',#{room_number}),'%')
+		</if>
+	</select>
+	<insert id="add" parameterType="com.graduate.hotel.room.service.Room">
+		insert into ht_room(id,room_number,position,type_id,phone,state,imgurl)
+		values(#{id},#{room_number},#{position},#{type_id},#{phone},#{state},#{imgurl})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from ht_room where id=#{id}
+	</delete>
+	
+	<select id="findById" parameterType="String" resultType="com.graduate.hotel.room.service.Room">
+		select * from ht_room where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="com.graduate.hotel.room.service.Room">
+		update ht_room set room_number=#{room_number},position=#{position},type_id=#{type_id},state=#{state},phone=#{phone}
+		where id=#{id}
+	</update>
+</mapper>

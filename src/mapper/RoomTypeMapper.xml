@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.graduate.hotel.room.service.RoomTypeMapper">
+
+	<select id="query" resultType="com.graduate.hotel.room.service.RoomType" parameterType="java.util.Map">
+			select * from ht_roomtype rt where 1=1 
+		<if test="tp_name != null and tp_name != '' ">
+			and rt.tp_name=#{tp_name}
+		</if>
+		<if test="bednum != null and bednum != '' ">
+			and rt.bednum=#{bednum}
+		</if>
+		 order by bednum asc
+    	 limit #{rowstart},#{rowend}
+    </select>
+    <select id="count" resultType="int" parameterType="java.util.Map">
+    SELECT count(*) from ht_roomtype rt where 1=1 
+		<if test="tp_name != null and tp_name != '' ">
+			and rt.tp_name=#{tp_name}
+		</if>
+		<if test="bednum != null and bednum != '' ">
+			and rt.bednum=#{bednum}
+		</if>
+	</select>
+	<insert id="add" parameterType="com.graduate.hotel.room.service.RoomType">
+		insert into ht_roomtype(ID,tp_name,price,bednum,breakfast,bedtype,people_num,remark)
+		values(#{id},#{tp_name},#{price},#{bednum},#{breakfast},#{bedtype},#{people_num},#{remark})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from ht_roomtype where ID=#{id}
+	</delete>
+	
+	<select id="findById" parameterType="String" resultType="com.graduate.hotel.room.service.RoomType">
+		select * from ht_roomtype where ID=#{id}
+	</select>
+	
+	<update id="update" parameterType="com.graduate.hotel.room.service.RoomType">
+		update ht_roomtype set tp_name=#{tp_name},price=#{price},bednum=#{bednum},breakfast=#{breakfast},bedtype=#{bedtype},people_num=#{people_num},remark=#{remark}
+		where ID=#{id}
+	</update>
+	
+	<select id="queryAll" resultType="com.graduate.hotel.room.service.RoomType">
+		select * from ht_roomtype
+	</select>
+</mapper>

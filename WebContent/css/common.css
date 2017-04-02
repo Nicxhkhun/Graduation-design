@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+
+body{ padding: 10px; }
+#navbar{ padding-bottom: 10px; color: #777;}
+#navbar a{ color: #777;}
+#navbar a,#navbar b,#navbar span{ display: inline-block; vertical-align: top; }
+#navbar b{ padding: 0 5px; }
+#navbar .navbar_con{border-bottom:1px solid #ccc; padding-bottom: 5px; padding-left: 23px; background:url(../images/home.png) no-repeat 0 2px;}

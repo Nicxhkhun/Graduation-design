@@ -1,0 +1,46 @@
+ body {
+	/*position:relative;*/
+	background:#f8f8f8;
+}
+.content {
+	position:absolute;
+	/*width:500px;
+	height:300px;*/
+	top:20%;
+	left:50%;
+	margin-left:-250px;
+	margin-top:150px;
+}
+.left {
+	float:left;
+	width:50%;
+}
+.img,.img img {
+	width:90%;
+}
+.right {
+	float:right;
+	width:50%;
+}
+.art_500 {
+	font:bold 70px "思源黑体 CN";
+	color:#f6735f;
+}
+.art_bold {
+	font:bold 18px "思源黑体 CN";
+	margin:5% 0;
+	color:#323232;
+}
+.art_sm {
+	font:16px "思源黑体 CN";
+	margin:5% 0;
+	color:#616161;
+}
+.ui_img_f {
+	font:14px "思源黑体 CN";
+	display:inline-block;
+	border:1px solid #ccc;
+	border-radius: 20px;
+	padding:5px 25px;
+	color:#616161;
+}
