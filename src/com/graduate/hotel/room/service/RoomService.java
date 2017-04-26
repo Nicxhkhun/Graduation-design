@@ -24,10 +24,10 @@ public class RoomService {
 	 * @param page
 	 * @return
 	 */
-	public Page<RoomVo> query(String type_id,String room_number,Page page) {
-		List<RoomVo> list = roomMapper.query(type_id,room_number,page.getFirst(),page.getPageSize());
+	public Page<RoomVo> query(String type_id,String room_number,Page page,Integer state) {
+		List<RoomVo> list = roomMapper.query(type_id,room_number,page.getFirst(),page.getPageSize(),state);
 		page.setResult(list);
-		page.setTotalRows((int)roomMapper.count(type_id,room_number));
+		page.setTotalRows((int)roomMapper.count(type_id,room_number,state));
 		return page;
 	}
 	/**
@@ -70,12 +70,30 @@ public class RoomService {
 	public Room findById(String id){
 		return roomMapper.findById(id);
 	}
+	
+	/**
+	 * id查询映射类
+	 * @param id
+	 * @return
+	 */
+	public RoomVo findRoomVoById(String id){
+		return roomMapper.findRoomVoById(id);
+	}
 	/**
 	 * 修改
 	 * @param roomType
 	 */
 	public void update(Room room){
 		roomMapper.update(room);
+	}
+	/**
+	 * 修改房间状态
+	 * @param state
+	 * @param id
+	 */
+	@Transactional
+	public void updateState(int state,String id){
+		roomMapper.updateState(state, id);
 	}
 	
 }

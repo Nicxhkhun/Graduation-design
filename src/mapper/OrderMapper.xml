@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.graduate.hotel.order.service.OrderMapper">
+	<select id="query" resultType="com.graduate.hotel.order.service.OrderVo" parameterType="java.util.Map">
+			select o.id as order_id,o.order_num order_num,o.room_id room_id,o.room_num room_num,o.type type,o.money money,
+			o.time time,o.op_id op_id,o.remark remark,
+			op.Name op_name from ht_order o join ht_operator op on o.op_id=op.ID where 1=1 
+		<if test="start_time != null and start_time != '' ">
+			and o.time &gt;= #{start_time}
+		</if>
+		<if test="end_time != null and end_time != '' ">
+			and o.time &lt;= #{end_time}
+		</if>
+		<if test="start_time == null and end_time == null ">
+			<![CDATA[  and o.time >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) ]]>
+		</if>
+		<if test="start_time == '' and end_time == '' ">
+			<![CDATA[ and o.time >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) ]]>
+		</if>
+		<if test="order_num != null and order_num != '' ">
+			and o.order_num=#{order_num}
+		</if>
+		 order by o.time desc
+    	 limit #{rowstart},#{rowend}
+    </select>
+    <select id="count" resultType="int" parameterType="java.util.Map">
+   		select count(*) from ht_order o join ht_operator op on o.op_id=op.ID where 1=1 
+		<if test="start_time != null and start_time != '' ">
+			and o.time &gt;= #{start_time}
+		</if>
+		<if test="end_time != null and end_time != '' ">
+			and o.time &lt;= #{end_time}
+		</if>
+		<if test="start_time == null and end_time == null ">
+			<![CDATA[ and o.time >=DATE_SUB(CURDATE(), INTERVAL 1 MONTH)  ]]>
+		</if>
+		<if test="start_time == '' and end_time == '' ">
+			<![CDATA[ and o.time >=DATE_SUB(CURDATE(), INTERVAL 1 MONTH)  ]]>
+		</if>
+		<if test="order_num != null and order_num != '' ">
+			and o.order_num=#{order_num}
+		</if>
+	</select>
+
+	<insert id="add" parameterType="com.graduate.hotel.order.service.Order">
+		insert into ht_order(id,order_num,room_id,room_num,type,money,time,op_id,remark)
+		values(#{id},#{order_num},#{room_id},#{room_num},#{type},#{money},now(),#{op_id},#{remark})
+	</insert>
+	
+	<update id="update" parameterType="com.graduate.hotel.order.service.Order">
+		update ht_order set remark=#{remark} where id=#{id}
+	</update>
+	
+	<update id="stayUpdate" parameterType="com.graduate.hotel.order.service.Order">
+		update ht_order set money=#{money},time=#{time},op_id=#{op_id} where order_num=#{order_num}
+	</update>
+	
+	<update id="changeRoom" parameterType="com.graduate.hotel.order.service.Order">
+		update ht_order set room_id=#{room_id},room_num=#{room_num},money=#{money},op_id=#{op_id},time=now(),op_id=#{op_id},
+		remark=#{remark} where order_num=#{order_num}
+	</update>
+	
+	<select id="findById" resultType="com.graduate.hotel.order.service.OrderVo">
+		select o.id as order_id,o.order_num order_num,o.room_id room_id,o.room_num room_num,o.type type,o.money money,
+		o.time time,o.op_id op_id,o.remark remark,
+		op.Name op_name from ht_order o join ht_operator op on o.op_id=op.ID where o.id=#{id}
+	</select>
+</mapper>

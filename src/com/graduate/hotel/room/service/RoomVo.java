@@ -7,7 +7,7 @@ public class RoomVo {
 	private String position;
 	private String type_id;
 	private String phone;
-	private int state;//(0:空闲，1：在使用，2：维护)
+	private int state;//(0:空闲，1：在使用，2：清洁)
 	private String imgurl;
 	
 	private String tp_name;

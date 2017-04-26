@@ -50,26 +50,34 @@
     <div id="sidebar">
         <div id="sidebar_list">
         	<dl>
-                <dt>入住管理</dt>
+                <dt>住宿管理</dt>
                 <dd>
                     <ul>
-               		<li><a href="<%=request.getContextPath() %>/occupancy/occupancy_query.jsp" target="frameContent"><i class="ico_tri"></i><span>基本信息</span></a></li>
+               		<li><a href="<%=request.getContextPath() %>/occupancy/queryroom.do" target="frameContent"><i class="ico_tri"></i><span>住宿信息</span></a></li>
                     </ul>
                 </dd>
             </dl>
             <dl>
-                <dt>客房维护</dt>
+                <dt>账单管理</dt>
+                <dd>
+                    <ul>
+               		<li><a href="<%=request.getContextPath() %>/order/query.do" target="frameContent"><i class="ico_tri"></i><span>账单信息</span></a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt>客房管理</dt>
                 <dd>
                     <ul>
                			<li><a href="<%=request.getContextPath() %>/roomtype/query.do" target="frameContent"><i class="ico_tri"></i><span>类型管理</span></a></li>
                     </ul>
                     <ul>
-               			<li><a href="<%=request.getContextPath() %>/room/query.do" target="frameContent"><i class="ico_tri"></i><span>客房管理</span></a></li>
+               			<li><a href="<%=request.getContextPath() %>/room/query.do" target="frameContent"><i class="ico_tri"></i><span>房间管理</span></a></li>
                     </ul>
                 </dd>
             </dl>
             <dl>
-                <dt>系统</dt>
+                <dt>个人管理</dt>
                 <dd>
                     <ul>
                		<li><a href="<%=request.getContextPath() %>/apply/toUpdate.do" target="frameContent"><i class="ico_tri"></i><span>基本信息</span></a></li>

@@ -13,6 +13,9 @@
 		<if test="room_number != null and room_number != '' ">
 			and r.room_number like concat(concat('%',#{room_number}),'%')
 		</if>
+		<if test="state != null">
+			and r.state=#{state}
+		</if>
 		order by r.room_number asc
     	 limit #{rowstart},#{rowend}
     </select>
@@ -23,6 +26,9 @@
 		</if>
 		<if test="room_number != null and room_number != '' ">
 			and r.room_number like concat(concat('%',#{room_number}),'%')
+		</if>
+		<if test="state != null">
+			and r.state=#{state}
 		</if>
 	</select>
 	<insert id="add" parameterType="com.graduate.hotel.room.service.Room">
@@ -38,8 +44,19 @@
 		select * from ht_room where id=#{id}
 	</select>
 	
+	<select id="findRoomVoById" resultType="com.graduate.hotel.room.service.RoomVo" parameterType="String">
+		select r.id id,r.room_number room_number,r.position position,r.type_id type_id,r.state state,r.imgurl imgurl,r.phone phone,
+		rt.bednum bednum,rt.bedtype bedtype,rt.breakfast breakfast,rt.people_num people_num,rt.price price,rt.remark remark,rt.tp_name tp_name
+		from ht_room r join ht_roomtype rt on r.type_id=rt.ID where r.id=#{id}
+	</select>
+	
 	<update id="update" parameterType="com.graduate.hotel.room.service.Room">
 		update ht_room set room_number=#{room_number},position=#{position},type_id=#{type_id},state=#{state},phone=#{phone}
+		where id=#{id}
+	</update>
+	
+	<update id="updateState" parameterType="java.util.Map">
+		update ht_room set state=#{state}
 		where id=#{id}
 	</update>
 </mapper>

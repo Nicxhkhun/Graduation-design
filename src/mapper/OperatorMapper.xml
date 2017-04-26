@@ -14,4 +14,8 @@
 		insert into ht_operator(ID,LoginName,Password,Name,Sex,BirthDay,Phone,Address,ImgUrl,Privilege,Intime)
 		values(#{id},#{loginName},#{password},#{name},#{sex},#{birthDay},#{phone},#{address},#{imgUrl},#{privilege},now())
 	</insert>
+	
+	<select id="findById" parameterType="String" resultType="com.graduate.hotel.operator.service.Operator">
+		select * from ht_operator where id=#{id}
+	</select>
 </mapper>

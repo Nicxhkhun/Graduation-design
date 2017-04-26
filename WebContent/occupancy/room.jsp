@@ -28,103 +28,64 @@
 <title>Insert title here</title>
 </head>
 <script type="text/javascript">  
-
-	function add(){
-		layer.open({
-			  type: 2,
-			  skin: 'layui-layer-lan', //加上边框
-			  area: ['870px', '520px'], //宽高
-			  resize: true,//拉伸
-			  fix: false, //不固定
-			  title: '添加客房',
-			  content: ['<%=request.getContextPath() %>/roomtype/findAll.do', 'yes']
-			
-			});
-	}
-	function update(){
+	function change(){
 		var id=getSelectedCheckBoxValue("tdcheckbox");	
 		if(id =="")
 			return;
-		
-		document.forms[0].action="<%=request.getContextPath() %>/room/initUpdate.do?id="+id;
-		document.forms[0].submit();
-	}
-	function del(){
-		var id=getSelectedCheckBoxValue("tdcheckbox");	
-		if(id =="")
-			return;
-		if(!confirm("是否要删除？")){
+		if(!confirm("是否要更换？")){
 			return;
 		}
-		var durl = "<%=request.getContextPath()%>/room/del.do";
+		var ocid=$("#ocid").val();
+		alert(ocid);
+		var durl = "<%=request.getContextPath()%>/occupancy/change.do";
 		$.post(durl, {
-			"id" : id
+			"roomid" : id,
+			"ocid" :ocid
 		}, function(data) {
-			if (data.code == "SUCCESS")
-				alert("删除成功！");
-			else
-				alert("删除失败！");
-			window.location.href='<%=request.getContextPath() %>/room/query.do';
+			if (data.res == "SUCCESS"){
+				layer.alert(data.money, {
+					  skin: 'layui-layer-lan' //样式类名
+					  ,closeBtn: 0
+					},function(){
+						layer.alert('换房成功', {
+						    skin: 'layui-layer-molv'
+						    ,closeBtn: 0
+						    ,anim: 4 
+					},function(){
+						window.location.href='<%=request.getContextPath() %>/occupancy/queryroom.do';
+					})
+				});
+			}
+			else{
+				alert("抱歉，出错了！");
+				window.location.href='<%=request.getContextPath() %>/occupancy/queryroom.do';
+			}
 		});
+		
 	}
 	
 	function query(){
 		document.forms[0].pageNumber.value=1;
-		document.forms[0].action="<%=request.getContextPath() %>/room/query.do";
+		document.forms[0].action="<%=request.getContextPath() %>/occupancy/findRoom.do";
 		document.forms[0].submit();
 	}
-	
-	function openDistrict() {
-		var id=getSelectedCheckBoxValue("tdcheckbox");	
-		if(id =="")
-			return;
-		//iframe层-父子操作
-		layer.open({
-		  type: 2,
-		  area: ['90%', '90%'],
-		  skin: 'layui-layer-lan',
-		  fix: false, //不固定
-		  maxmin: true,
-		  title: '分区选择',
-		  content: '<%=request.getContextPath() %>/district/select.do?id='+id,
-		  btn: '确认',
-          yes : function(index,dom){
-        	  window["layui-layer-iframe" + index].formSubmit();
-          },
-          end: function () {
-              location.reload();
-          }
-		});
-	}
-	
-	function openCombo() {
-		var id=getSelectedCheckBoxValue("tdcheckbox");	
-		if(id =="")
-			return;
-		//iframe层-父子操作
-		layer.open({
-		  type: 2,
-		  area: ['90%', '90%'],
-		  skin: 'layui-layer-lan',
-		  fix: false, //不固定
-		  maxmin: true,
-		  title: '套餐选择',
-		  content: '<%=request.getContextPath() %>/coach/selectCombo.do?id='+id,
-		  btn: '确认',
-          yes : function(index,dom){
-        	  window["layui-layer-iframe" + index].formSubmit();
-          },
-          end: function () {
-              location.reload();
-          }
-		});
-	}
+	/*var durl = "<%=request.getContextPath()%>/occupancy/change.do";
+		$.post(durl, {
+			"roomid" : id,
+			"ocid" :ocid
+		}, function(data) {
+			if (data.code == "SUCCESS")
+				alert(data.money);
+			else
+				alert("失败！");
+			window.location.href='<%=request.getContextPath() %>/room/query.do';
+		});*/
 </script>
 
 <body>
  <div id="navbar">
 		<div class="navbar_con" style="min-width: 1000px;">
-			当前位置：客房管理<b>&gt;</b><span>房间管理</span>
+			当前位置：住宿管理<b>&gt;</b><span>更换客房</span><b>&gt;</b><span>客房查询</span>
 		</div>
 	</div>
 	
@@ -140,10 +101,9 @@
 			<b>房间号:</b>&nbsp;<input type="text" name="room_number" value="${room_number }" class="form-control" style="width: 150px">
 		         <%--  床位&nbsp;<input type="text" name="bednum" id="bednum" value="${bednum }" class="form-control" style="width: 100px" onkeyup='this.value=this.value.replace(/\D/gi,"")' onpaste="return false;"> &nbsp;&nbsp; --%>
 			<button type="button" class="btn btn-primary" onclick="query()">查询</button>
-			<button type="button" class="btn btn-default" onclick="add()">增加</button>
-			<button type="button" class="btn btn-default" onclick="update()">修改</button>
-			<button type="button" class="btn btn-danger" onclick="del()">删除</button>
+			<button type="button" class="btn btn-danger" onclick="change()">换房</button>
 		</div>
+		<input type="hidden" id="ocid" value="${ocid }">
 	<div class="container">  	
 		<table class="table table-bordered" data-resizable-columns-id="demo-table" style="min-width: 1000px;">
 			<thead>

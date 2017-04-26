@@ -139,9 +139,9 @@
 		<div class="form-group">
 		     <label for="lastname" class="col-sm-2 control-label" style="margin-left: -90px;">位置</label>
 		        <div style="width:200px;display: inline-block;margin-left: 61px;width: 394px">
-						<textarea name="position" id="position" class="form-control"
-							placeholder="请输入位置信息(非必填项)" rows="6"></textarea>
-					</div>
+					<textarea name="position" id="position" class="form-control"
+						placeholder="请输入位置信息(非必填项)" rows="6"></textarea>
+				</div>
 		 </div>
 		 <div class="form-group" style="margin-bottom: -4px;">
 			<label for="firstname" class="clo_sex" style="float: left;margin-top: 8px;">图片</label>

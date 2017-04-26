@@ -37,7 +37,7 @@ public class RoomControl extends BaseControl {
 	@ResponseBody
 	@RequestMapping(value = "query.do")
 	public ModelAndView selectDevice(ModelAndView view, String type_id, String room_number, Page page) {
-		page = roomService.query(type_id,room_number,page);
+		page = roomService.query(type_id,room_number,page,null);
 		List list=roomTypeService.queryAll();
 		view.addObject("type_data", list);
 		view.addObject("data", page.getList());
